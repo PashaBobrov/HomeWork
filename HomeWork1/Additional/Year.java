@@ -5,10 +5,9 @@ import java.util.Scanner;
 
 public class Year {
     public static void main(String[] args) {
-
         String result;
-
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Введите число:");
         int value = scanner.nextInt();
 
