@@ -96,7 +96,7 @@ public class Hanoi implements IHanoi {
         replayMode = on_off;
     }
 
-    public int getCountMove() {
+    protected int getCountMove() {
         return savedGame.size();
     }
 
@@ -109,6 +109,7 @@ public class Hanoi implements IHanoi {
             int[] move = {Integer.valueOf(arrMove[0]),Integer.valueOf(arrMove[1])};
             savedGame.add(move);
         }
+        printSavedGame();
         return (savedGame.size() > 0);
     }
 
@@ -120,7 +121,7 @@ public class Hanoi implements IHanoi {
         myWriter.close();
     }
 
-    public boolean newMove(int towerFrom, int towerTo) {
+    protected boolean newMove(int towerFrom, int towerTo) {
 
         int indexTowerFrom = towerFrom - 1;
         int indexTowerTo = towerTo - 1;
@@ -161,7 +162,7 @@ public class Hanoi implements IHanoi {
         savedGame.add(move);
     }
 
-    public boolean isWin() {
+    protected boolean isWin() {
 
         for (int iDisk = 0; iDisk < disks; iDisk++) {
             if(this.field[iDisk][towers-1] != disks - iDisk){
@@ -172,7 +173,7 @@ public class Hanoi implements IHanoi {
         return true;
     }
 
-    public void printField() {
+    protected void printField() {
         System.out.println("");
         for (int iDisk = disks - 1; iDisk >= 0; iDisk--) {
             String strField = "";
@@ -183,7 +184,7 @@ public class Hanoi implements IHanoi {
         }
     }
 
-    public void printSavedGame() {
+    protected void printSavedGame() {
         initiolizeField();
         printField();
         setReplayMode(true);

@@ -36,15 +36,14 @@ public class HanoiMain {
         System.out.println("<1> Запустить игру. Играете вы.");
         System.out.println("<2> Запустить игру. Играет компьютер.");
         System.out.println("<3> Запустить игру. Играет компьютер(Но не знает правил).");
-        System.out.println("<4> Загрузить сохраненную игру.");
+        System.out.println("<4> Загрузить сохраненную игру и продолжить");
         System.out.println("<5> Запустить сохраненную игру.");
         System.out.println("<6> Сохранить игру.");
-        System.out.println("<AnyKey> Выйти из игры");
+        System.out.println("<AnyKey> Выйти из игры.");
 
         Scanner scanner = new Scanner(System.in);
         String result = scanner.nextLine();
         return result;
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -70,8 +69,9 @@ public class HanoiMain {
                         hanoi = createGameInstance(chItem);
                     }
                     if (hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
-                        hanoi.printSavedGame();
                         hanoi.gamePlay();
+                    } else {
+                        System.out.println("Нет данных для загрузки");
                     }
                     break;
                 case('5'):
@@ -79,8 +79,8 @@ public class HanoiMain {
                         if (hanoi == null) {
                             hanoi = createGameInstance(chItem);
                         }
-                        if (hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
-                            hanoi.printSavedGame();
+                        if (!hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
+                            System.out.println("Нет данных для загрузки");
                         }
                     }
                     break;
