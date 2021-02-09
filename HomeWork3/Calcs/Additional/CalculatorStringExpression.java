@@ -171,6 +171,4 @@ public class CalculatorStringExpression {
 
         return result;
     }
-
-
 }

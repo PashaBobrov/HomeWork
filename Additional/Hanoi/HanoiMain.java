@@ -1,20 +1,19 @@
 package Additional.Hanoi;
 
-import Additional.Hanoi.Hanoi;
-
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class HanoiMain {
+    static IHanoi currentHanoi;
 
-    public static Hanoi getGameInstance(String strItemMenu) {
-        Hanoi result = null;
+    public static IHanoi createGameInstance(char chItem) {
+        IHanoi result = null;
         Scanner scanner = new Scanner(System.in);
-        char chItem =(strItemMenu.toCharArray()[0]);
-        System.out.println("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРёСЃРєРѕРІ");
+        System.out.println("Введите количество дисков");
         int disks  = scanner.nextInt();
-        System.out.println("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РµСЂР¶РЅРµР№");
+        System.out.println("Введите количество стержней");
         int towers  = scanner.nextInt();
-
         switch (chItem) {
             case('1'):
                 result = new Hanoi(disks,towers);
@@ -26,19 +25,21 @@ public class HanoiMain {
                 result = new HanoiAutomatStupid(disks,towers);
                 break;
             default:
-                return result;
+                return new Hanoi(disks,towers);
         }
-
         return result;
     }
+
     public static String getStartItemMenu() {
 
-        System.out.println("<1> Р—Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ. РРіСЂР°РµС‚Рµ РІС‹.");
-        System.out.println("<2> Р—Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ. РРіСЂР°РµС‚ РєРѕРјРїСЊСЋС‚РµСЂ.");
-        System.out.println("<3> Р—Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ. РРіСЂР°РµС‚ РєРѕРјРїСЊСЋС‚РµСЂ(РќРѕ РЅРµ Р·РЅР°РµС‚ РїСЂР°РІРёР»).");
-        System.out.println("<4> Р—Р°РіСЂСѓР·РёС‚СЊ СЃРѕС…СЂР°РЅРµРЅРЅСѓСЋ РёРіСЂСѓ.");
-        System.out.println("<5> Р—Р°РїСѓСЃС‚РёС‚СЊ СЃРѕС…СЂР°РЅРµРЅРЅСѓСЋ РёРіСЂСѓ.");
-        System.out.println("<Q> Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ.");
+        System.out.println();
+        System.out.println("<1> Запустить игру. Играете вы.");
+        System.out.println("<2> Запустить игру. Играет компьютер.");
+        System.out.println("<3> Запустить игру. Играет компьютер(Но не знает правил).");
+        System.out.println("<4> Загрузить сохраненную игру.");
+        System.out.println("<5> Запустить сохраненную игру.");
+        System.out.println("<6> Сохранить игру.");
+        System.out.println("<AnyKey> Выйти из игры");
 
         Scanner scanner = new Scanner(System.in);
         String result = scanner.nextLine();
@@ -46,16 +47,51 @@ public class HanoiMain {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        IHanoi hanoi = null;
         boolean quit = false;
         while (!quit) {
-            Hanoi hanoi = getGameInstance(getStartItemMenu());
-            if(hanoi != null) {
-                hanoi.gamePlay();
-            } else {
-                quit = true;
+            String strItem = getStartItemMenu();
+            char chItem = (strItem.toCharArray()[0]);
+            switch (chItem) {
+                case('1'):
+                case('2'):
+                case('3'):
+                    hanoi = createGameInstance(chItem);
+                    if(hanoi != null) {
+                        hanoi.gamePlay();
+                        //TODO выход на середине игры
+                    } else {
+                        quit = true;
+                    }
+                    break;
+                case('4'):
+                    if (hanoi == null) {
+                        hanoi = createGameInstance(chItem);
+                    }
+                    if (hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
+                        hanoi.printSavedGame();
+                        hanoi.gamePlay();
+                    }
+                    break;
+                case('5'):
+                    if (hanoi != null) {
+                        if (hanoi == null) {
+                            hanoi = createGameInstance(chItem);
+                        }
+                        if (hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
+                            hanoi.printSavedGame();
+                        }
+                    }
+                    break;
+                case('6'):
+                    if (hanoi != null) {
+                        hanoi.SaveGameToFile(Paths.get(Hanoi.PATH_FAILE_GAME));
+                    }
+                    break;
+                default:
+                    quit = true;
             }
-
         }
     }
 }

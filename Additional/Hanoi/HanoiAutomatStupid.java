@@ -1,7 +1,6 @@
 package Additional.Hanoi;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class HanoiAutomatStupid extends HanoiAutomat {
     public HanoiAutomatStupid(int disks, int towers) {
@@ -15,24 +14,23 @@ public class HanoiAutomatStupid extends HanoiAutomat {
         do {
             printField();
 
-            System.out.print("Р’РІРµРґРёС‚Рµ СЃС‚РµСЂР¶РµРЅСЊ РѕС‚РєСѓРґР°--> ");
+            System.out.print("Введите стержень откуда--> ");
             tower  = getRandTower(newTower);
             System.out.println(tower);
-            System.out.print("Р’РІРµРґРёС‚Рµ СЃС‚РµСЂР¶РµРЅСЊ РєСѓРґР°  --> ");
+            System.out.print("Введите стержень куда  --> ");
             newTower = getRandTower(tower);
             System.out.println(newTower);
 
             if (newMove(tower,newTower)) {
                 gameover = isWin();
                 if (gameover){
-                    System.out.print("РџРѕР·РґСЂР°РІР»СЏСЋ СЌС‚Рѕ РїРѕР±РµРґР° Р·Р° " + getCountMove() + " С…РѕРґРѕРІ!");
                     printField();
-                    //printSavedGame();
+                    System.out.print("Победа компьютера за " + getCountMove() + " ходов!");
                 }
             } else {
                 tower = 0;
                 newTower = 0;
-                System.out.print("РќРµ РїСЂР°РІРёР»СЊРЅС‹Р№ С…РѕРґ");
+                System.out.print("Не правильный ход");
             }
         } while (!gameover);
     }
@@ -42,7 +40,7 @@ public class HanoiAutomatStupid extends HanoiAutomat {
         int result;
         Random random = new Random();
         do {
-            result = random.nextInt(field[0].length) + 1;
+            result = random.nextInt(towers) + 1;
         } while (result == prevTower);
 
         return result;

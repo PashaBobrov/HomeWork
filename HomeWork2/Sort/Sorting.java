@@ -3,7 +3,7 @@ package HomeWork2.Sort;
 class Sorting {
 
     public static void bubbleSort(int[] container) {
-        for (int j = 1; j < container.length - 1; j++) {
+        for (int j = 1; j < container.length; j++) {
             boolean flagEnd = true;
             for (int i = 0; i < container.length - j; i++) {
                 if (container[i] > container[i + 1]) {
@@ -14,7 +14,7 @@ class Sorting {
                 }
             }
             if (flagEnd) {
-                break;
+               // break;
             }
 
         }

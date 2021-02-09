@@ -8,17 +8,17 @@ public class HanoiAutomat extends Hanoi {
 
     private int getTower(int disk,int shift) {
         int result = -1;
-        for (int iDisk =  0; iDisk < field.length; iDisk++) {
-            for (int jTower = 0; jTower < field[iDisk].length; jTower++) {
+        for (int iDisk =  0; iDisk < disks; iDisk++) {
+            for (int jTower = 0; jTower < towers; jTower++) {
                 if (field[iDisk][jTower] == disk) {
                     result = jTower + 1;
                 }
             }
         }
 
-        int bound = field[0].length - 2;
+        int bound = towers - 2;
         if (shift > 0) {
-            int ost = (result + shift) % field[0].length;
+            int ost = (result + shift) % towers;
             if (ost > bound || ost == 1) {
                 result = ost;
             } else if (ost == 0) {
@@ -28,7 +28,7 @@ public class HanoiAutomat extends Hanoi {
             }
         } else if(shift < 0) {
             if(result + shift  == 0) {
-                result = field[0].length;
+                result = towers;
             } else if (result + shift <= bound) {
                 result = 1;
             } else {
@@ -41,7 +41,8 @@ public class HanoiAutomat extends Hanoi {
     @Override
     public void gamePlay() {
         printField();
-        autoGame(field.length,-1);
+        autoGame(disks,-1);
+        System.out.print("Победа компьютера за " + getCountMove() + " ходов!");
     }
 
 

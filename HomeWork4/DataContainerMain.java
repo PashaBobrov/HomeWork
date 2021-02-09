@@ -37,9 +37,13 @@ public class DataContainerMain {
         DataContainer.sort(container,Comparator.reverseOrder());
         System.out.println(container.toString());
 
-         while (container.hasNext()) {
+         /*while (container.hasNext()) {
              System.out.println(container.next());
-         }
+         }*/
+
+        for (Integer item: container) {
+            System.out.println(item.toString());
+        }
 
     }
 }

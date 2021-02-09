@@ -12,17 +12,16 @@ import HomeWork3.Calcs.Additional.CalculatorWithCounterAutoComposite;
 
 public class CalculatorWithCounterAutoCompositeMain {
     public static void main(String[] args) {
-        CalculatorWithCounterAutoComposite сalculatorWithCounterAutoComposite
-                = new CalculatorWithCounterAutoComposite(new CalculatorWithMathExtends());
+        CalculatorWithCounterAutoComposite calculatorWithCounterAutoComposite = new CalculatorWithCounterAutoComposite(new CalculatorWithMathExtends());
         double result;
 
-        result = сalculatorWithCounterAutoComposite.divide(28, 5);
-        result = сalculatorWithCounterAutoComposite.pow(result,2);
-        result = сalculatorWithCounterAutoComposite.addition(result,4.1);
-        result = сalculatorWithCounterAutoComposite.addition(result, сalculatorWithCounterAutoComposite.multiply(15,7));
+        result = calculatorWithCounterAutoComposite.divide(28, 5);
+        result = calculatorWithCounterAutoComposite.pow(result,2);
+        result = calculatorWithCounterAutoComposite.addition(result,4.1);
+        result = calculatorWithCounterAutoComposite.addition(result, calculatorWithCounterAutoComposite.multiply(15,7));
 
         System.out.println(result); //140.45999999999998
-        System.out.println(сalculatorWithCounterAutoComposite.getCountOperation()); //5
+        System.out.println(calculatorWithCounterAutoComposite.getCountOperation()); //5
 
     }
 }

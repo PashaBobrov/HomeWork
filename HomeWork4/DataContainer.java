@@ -50,6 +50,7 @@ package HomeWork4;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 
 /**
@@ -57,12 +58,9 @@ import java.util.Iterator;
  * @autor Павел Бобров
  * @version 1.1
  */
-public class DataContainer <T> implements Iterator {
+public class DataContainer <T> implements Iterable <T> {
     /**  Массив - хранилище значений*/
     private T[] data;
-    /**Текущий инденкс массива при использовании итератора */
-    private int currentIndexData = 0;
-
     /**
      * Конструктор - создание нового объекта с массивом из вне
      * @param data - массив обобщенного типа
@@ -79,35 +77,6 @@ public class DataContainer <T> implements Iterator {
         return data[index];
     }
 
-    /**
-     * Функция проверяет существует ли следующий элемент коллекции
-     * Переопределения метода интерфейса{@link Iterator}
-     * @return возвращает true, если элемент существует
-     */
-    @Override
-    public boolean hasNext() {
-        if (currentIndexData < data.length) {
-            return true;
-        } else  {
-            return false;
-        }
-    }
-
-    /**
-     * Функция возвращает следующий элемент коллекции.
-     * Переопределения метода интерфейса{@link Iterator}
-     * если достигнут конец счетчик  {@link DataContainer#currentIndexData} сбрасывается и возвращается null
-     * @return возвращате T ссылку
-     */
-    @Override
-    public T next() {
-        if (hasNext()) {
-            return data[currentIndexData++];
-        } else {
-            currentIndexData = 0; //перевернем страницу ))
-            return null;
-        }
-    }
 
     /**
      * Процедура сортирует коллекцию - входящий параметр
@@ -234,7 +203,6 @@ public class DataContainer <T> implements Iterator {
      * @param comparator - компоратор
      */
     public void sort(Comparator <T> comparator) {
-
         for (int j = 1; j < data.length; j++) {
             boolean flagEnd = true;
             for (int i = 0; i < data.length - j; i++) {
@@ -252,4 +220,22 @@ public class DataContainer <T> implements Iterator {
         }
     }
 
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        if(action == null){
+            throw  new NullPointerException();
+        }
+        T elem = null;
+        for (T t : this) {
+            elem = t;
+        }
+        action.accept(elem);
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new IteratorDataContainer(data);
+    }
 }
+
+
