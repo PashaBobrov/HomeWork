@@ -42,7 +42,7 @@ public class HanoiAutomat extends Hanoi {
     public void gamePlay() {
         printField();
         autoGame(disks,-1);
-        System.out.print("Победа компьютера за " + getCountMove() + " ходов!");
+        System.out.print("Џобеда компьютера за " + getCountMove() + " ходов!");
     }
 
 
