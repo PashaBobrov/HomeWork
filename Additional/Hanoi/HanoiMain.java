@@ -2,35 +2,44 @@ package Additional.Hanoi;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class HanoiMain {
-    static IHanoi currentHanoi;
-
-    public static IHanoi createGameInstance(char chItem) {
+    public static IHanoi createGameInstance(ItemsGameMenu itemGameMenu) throws IOException {
         IHanoi result = null;
+        if(itemGameMenu == ItemsGameMenu.QUITGAME || itemGameMenu == ItemsGameMenu.SAVEGAME) {
+            return result;
+        }
+        Map<String,Integer> params = getParamsGame();
+        int disks = params.get("disks");
+        int towers = params.get("towers");
+        if (itemGameMenu == ItemsGameMenu.COMPUTERGAME) {
+            result = new Hanoi(disks,towers);
+        } else if (itemGameMenu == ItemsGameMenu.STUPEDCOMPUTERGAME) {
+            result = new HanoiAutomatStupid(disks,towers);
+        } else if (itemGameMenu == ItemsGameMenu.LOADCONTINUE
+                || itemGameMenu == ItemsGameMenu.LOADGAME) {
+            result = new Hanoi(Paths.get(Hanoi.PATH_FAILE_GAME));
+        } else {
+            result = new Hanoi(disks,towers);
+        }
+        return result;
+    }
+
+    public static Map<String,Integer> getParamsGame() {
+        Map<String,Integer> result = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите количество дисков");
         int disks  = scanner.nextInt();
         System.out.println("Введите количество стержней");
         int towers  = scanner.nextInt();
-        switch (chItem) {
-            case('1'):
-                result = new Hanoi(disks,towers);
-                break;
-            case('2'):
-                result = new HanoiAutomat(disks,towers);
-                break;
-            case('3'):
-                result = new HanoiAutomatStupid(disks,towers);
-                break;
-            default:
-                return new Hanoi(disks,towers);
-        }
+        result.put("disks",disks);
+        result.put("towers",towers);
         return result;
     }
-
-    public static String getStartItemMenu() {
+    public static ItemsGameMenu getStartItemMenu() {
 
         System.out.println();
         System.out.println("<1> Запустить игру. Играете вы.");
@@ -42,56 +51,59 @@ public class HanoiMain {
         System.out.println("<AnyKey> Выйти из игры.");
 
         Scanner scanner = new Scanner(System.in);
-        String result = scanner.nextLine();
-        return result;
+        String strItem = scanner.nextLine();
+        return ItemsGameMenu.get(strItem.toCharArray()[0]);
     }
 
     public static void main(String[] args) throws IOException {
         IHanoi hanoi = null;
         boolean quit = false;
         while (!quit) {
-            String strItem = getStartItemMenu();
-            char chItem = (strItem.toCharArray()[0]);
-            switch (chItem) {
-                case('1'):
-                case('2'):
-                case('3'):
-                    hanoi = createGameInstance(chItem);
-                    if(hanoi != null) {
-                        hanoi.gamePlay();
-                        //TODO выход на середине игры
-                    } else {
-                        quit = true;
-                    }
+            ItemsGameMenu itemGameMenu = getStartItemMenu();
+            switch (itemGameMenu) {
+                case LOADGAME:
+                    hanoi = createGameInstance(itemGameMenu);
                     break;
-                case('4'):
-                    if (hanoi == null) {
-                        hanoi = createGameInstance(chItem);
-                    }
-                    if (hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
-                        hanoi.gamePlay();
-                    } else {
-                        System.out.println("Нет данных для загрузки");
-                    }
-                    break;
-                case('5'):
-                    if (hanoi != null) {
-                        if (hanoi == null) {
-                            hanoi = createGameInstance(chItem);
-                        }
-                        if (!hanoi.loadGameFromFile(Paths.get(Hanoi.PATH_FAILE_GAME))) {
-                            System.out.println("Нет данных для загрузки");
-                        }
-                    }
-                    break;
-                case('6'):
+                case SAVEGAME:
+                    //TODO сохранять размеры поля
                     if (hanoi != null) {
                         hanoi.SaveGameToFile(Paths.get(Hanoi.PATH_FAILE_GAME));
                     }
                     break;
-                default:
+                case QUITGAME:
                     quit = true;
+                    break;
+                default:
+                    //TODO выход на середине игры
+                    hanoi = createGameInstance(itemGameMenu);
+                    hanoi.gamePlay();
             }
         }
+    }
+}
+
+enum ItemsGameMenu{
+    SOLOGAME('1'),
+    COMPUTERGAME('2'),
+    STUPEDCOMPUTERGAME('3'),
+    LOADCONTINUE('4'),
+    LOADGAME('5'),
+    SAVEGAME('6'),
+    QUITGAME(' ');
+
+    private char key;
+    ItemsGameMenu(char key) {this.key = key;};
+    public char getKey() {
+        return key;
+    }
+
+    public static ItemsGameMenu get(char key) {
+        ItemsGameMenu[] items = ItemsGameMenu.values();
+        for (ItemsGameMenu item : items) {
+            if (item.key == key) {
+                return item;
+            }
+        }
+        return QUITGAME;
     }
 }
