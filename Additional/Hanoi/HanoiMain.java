@@ -16,7 +16,7 @@ public class HanoiMain {
         int disks = params.get("disks");
         int towers = params.get("towers");
         if (itemGameMenu == ItemsGameMenu.COMPUTERGAME) {
-            result = new Hanoi(disks,towers);
+            result = new HanoiAutomat(disks,towers);
         } else if (itemGameMenu == ItemsGameMenu.STUPEDCOMPUTERGAME) {
             result = new HanoiAutomatStupid(disks,towers);
         } else if (itemGameMenu == ItemsGameMenu.LOADCONTINUE
@@ -31,9 +31,9 @@ public class HanoiMain {
     public static Map<String,Integer> getParamsGame() {
         Map<String,Integer> result = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите количество дисков");
+        System.out.println("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРёСЃРєРѕРІ");
         int disks  = scanner.nextInt();
-        System.out.println("Введите количество стержней");
+        System.out.println("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РµСЂР¶РЅРµР№");
         int towers  = scanner.nextInt();
         result.put("disks",disks);
         result.put("towers",towers);
@@ -42,13 +42,13 @@ public class HanoiMain {
     public static ItemsGameMenu getStartItemMenu() {
 
         System.out.println();
-        System.out.println("<1> Запустить игру. Играете вы.");
-        System.out.println("<2> Запустить игру. Играет компьютер.");
-        System.out.println("<3> Запустить игру. Играет компьютер(Но не знает правил).");
-        System.out.println("<4> Загрузить сохраненную игру и продолжить");
-        System.out.println("<5> Запустить сохраненную игру.");
-        System.out.println("<6> Сохранить игру.");
-        System.out.println("<AnyKey> Выйти из игры.");
+        System.out.println("<1> Р—Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ. РРіСЂР°РµС‚Рµ РІС‹");
+        System.out.println("<2> Р—Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ. РРіСЂР°РµС‚ РєРѕРјРїСЊСЋС‚РµСЂ.");
+        System.out.println("<3> Р—Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ. РРіСЂР°РµС‚ РєРѕРјРїСЊСЋС‚РµСЂ(РќРѕ РЅРµ Р·РЅР°РµС‚ РїСЂР°РІРёР»).");
+        System.out.println("<4> Р—Р°РіСЂСѓР·РёС‚СЊ СЃРѕС…СЂР°РЅРµРЅРЅСѓСЋ РёРіСЂСѓ Рё РїСЂРѕРґРѕР»Р¶РёС‚СЊ");
+        System.out.println("<5> Р—Р°РїСѓСЃС‚РёС‚СЊ СЃРѕС…СЂР°РЅРµРЅРЅСѓСЋ РёРіСЂСѓ.");
+        System.out.println("<6> РЎРѕС…СЂР°РЅРёС‚СЊ РёРіСЂСѓ.");
+        System.out.println("<AnyKey> Р’С‹Р№С‚Рё РёР· РёРіСЂС‹.");
 
         Scanner scanner = new Scanner(System.in);
         String strItem = scanner.nextLine();
@@ -65,7 +65,7 @@ public class HanoiMain {
                     hanoi = createGameInstance(itemGameMenu);
                     break;
                 case SAVEGAME:
-                    //TODO сохранять размеры поля
+                    //TODO СЃРѕС…СЂР°РЅСЏС‚СЊ СЂР°Р·РјРµСЂС‹ РїРѕР»СЏ
                     if (hanoi != null) {
                         hanoi.SaveGameToFile(Paths.get(Hanoi.PATH_FAILE_GAME));
                     }
@@ -74,7 +74,7 @@ public class HanoiMain {
                     quit = true;
                     break;
                 default:
-                    //TODO выход на середине игры
+                    //TODO РІС‹С…РѕРґ РЅР° СЃРµСЂРµРґРёРЅРµ РёРіСЂС‹
                     hanoi = createGameInstance(itemGameMenu);
                     hanoi.gamePlay();
             }
