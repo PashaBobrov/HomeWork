@@ -67,6 +67,7 @@ import java.util.Scanner;
 
 public class Hanoi implements IHanoi {
     public static final String PATH_FAILE_GAME = "savedgame.txt";
+    public static Scanner scanner = new Scanner(System.in);
     protected int[][] field;
     protected int disks;
     protected int towers;
@@ -78,17 +79,13 @@ public class Hanoi implements IHanoi {
         this.towers = towers;
         this.field = new int[disks][towers];
         initiolizeField();
-
+        printGame();
     }
 
     public Hanoi(Path path) throws IOException {
-        this.disks = 3;
-        this.towers = 3;
-        this.field = new int[disks][towers];
-        initiolizeField();
-
         loadGameFromFile(path);
-
+        this.field = new int[this.disks][this.towers];
+        initiolizeField();
     }
 
     private void initiolizeField() {
@@ -115,17 +112,24 @@ public class Hanoi implements IHanoi {
         savedGame.clear();
         String contentFile = new String(Files.readAllBytes(path));
         String arrSplitMove[] = contentFile.split(";");
+        boolean flagFirstElement = true;
         for (String val: arrSplitMove) {
             String[] arrMove = val.split(",");
-            int[] move = {Integer.valueOf(arrMove[0]),Integer.valueOf(arrMove[1])};
-            savedGame.add(move);
+            if (flagFirstElement) {
+                this.disks =  Integer.valueOf(arrMove[0]);
+                this.towers = Integer.valueOf(arrMove[1]);
+                flagFirstElement = false;
+            } else {
+                int[] move = {Integer.valueOf(arrMove[0]), Integer.valueOf(arrMove[1])};
+                savedGame.add(move);
+            }
         }
-        printSavedGame();
         return (savedGame.size() > 0);
     }
 
     public void SaveGameToFile(Path path) throws IOException {
         FileWriter myWriter = new FileWriter(path.toString());
+        myWriter.write(disks + "," + towers + ";");
         for (int[] move: savedGame) {
             myWriter.write(String.valueOf(move[0]) + "," + String.valueOf(move[1]) + ";");
         }
@@ -195,7 +199,7 @@ public class Hanoi implements IHanoi {
         }
     }
 
-    protected void printSavedGame() {
+    public void printGame() {
         initiolizeField();
         printField();
         setReplayMode(true);
@@ -207,15 +211,19 @@ public class Hanoi implements IHanoi {
     }
 
     public void gamePlay() {
-        Scanner scanner = new Scanner(System.in);
+
         boolean gameover = false;
         do {
             printField();
 
-            System.out.print("Введите стержень откуда--> ");
-            int tower  = scanner.nextInt();
-            System.out.print("Введите стержень куда  --> ");
-            int newTower  = scanner.nextInt();
+            int tower  = readTurnPlayer("Введите стержень откуда (q переход в меню)--> ");
+            int newTower  = readTurnPlayer("Введите стержень куда  --> ");
+            if (tower == -1 || newTower == -1) {
+                break;
+            } else {
+                tower = Math.min(tower, this.towers);
+                newTower = Math.min(newTower, this.towers);
+            }
 
             if (newMove(tower,newTower)) {
                 gameover = isWin();
@@ -227,5 +235,25 @@ public class Hanoi implements IHanoi {
                 System.out.print("Не правильный ход");
             }
         } while (!gameover);
+    }
+
+    static private int readTurnPlayer(String message) {
+        int result = -1;
+        boolean valid = false;
+        do {
+            System.out.print(message);
+            String buff = scanner.nextLine();
+            if (buff.equalsIgnoreCase("q")) {
+                valid = true;
+                result = -1;
+            } else {
+                try {
+                    result = Integer.parseInt(buff);
+                    valid  = true;
+                } catch (NumberFormatException e) {};
+            }
+
+        } while (!valid);
+        return result;
     }
 }

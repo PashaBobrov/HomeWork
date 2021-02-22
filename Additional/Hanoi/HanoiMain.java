@@ -7,23 +7,52 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class HanoiMain {
+
+    public static void main(String[] args) throws IOException {
+        IHanoi hanoi = null;
+        boolean quit = false;
+        while (!quit) {
+            ItemsGameMenu itemGameMenu = getStartItemMenu();
+            switch (itemGameMenu) {
+                case LOADGAME:
+                    hanoi = createGameInstance(itemGameMenu);
+                    hanoi.printGame();
+                    break;
+                case SAVEGAME:
+                    if (hanoi != null) {
+                        hanoi.SaveGameToFile(Paths.get(Hanoi.PATH_FAILE_GAME));
+                    }
+                    break;
+                case QUITGAME:
+                    quit = true;
+                    break;
+                default:
+                    //TODO выход на середине игры
+                    hanoi = createGameInstance(itemGameMenu);
+                    hanoi.gamePlay();
+            }
+        }
+    }
+
     public static IHanoi createGameInstance(ItemsGameMenu itemGameMenu) throws IOException {
         IHanoi result = null;
         if(itemGameMenu == ItemsGameMenu.QUITGAME || itemGameMenu == ItemsGameMenu.SAVEGAME) {
             return result;
         }
-        Map<String,Integer> params = getParamsGame();
-        int disks = params.get("disks");
-        int towers = params.get("towers");
-        if (itemGameMenu == ItemsGameMenu.COMPUTERGAME) {
-            result = new HanoiAutomat(disks,towers);
-        } else if (itemGameMenu == ItemsGameMenu.STUPEDCOMPUTERGAME) {
-            result = new HanoiAutomatStupid(disks,towers);
-        } else if (itemGameMenu == ItemsGameMenu.LOADCONTINUE
+        if (itemGameMenu == ItemsGameMenu.LOADCONTINUE
                 || itemGameMenu == ItemsGameMenu.LOADGAME) {
             result = new Hanoi(Paths.get(Hanoi.PATH_FAILE_GAME));
         } else {
-            result = new Hanoi(disks,towers);
+            Map<String,Integer> params = getParamsGame();
+            int disks = params.get("disks");
+            int towers = params.get("towers");
+            if (itemGameMenu == ItemsGameMenu.COMPUTERGAME) {
+                result = new HanoiAutomat(disks,towers);
+            } else if (itemGameMenu == ItemsGameMenu.STUPEDCOMPUTERGAME) {
+                result = new HanoiAutomatStupid(disks, towers);
+            } else {
+                result = new Hanoi(disks,towers);
+            }
         }
         return result;
     }
@@ -55,31 +84,6 @@ public class HanoiMain {
         return ItemsGameMenu.get(strItem.toCharArray()[0]);
     }
 
-    public static void main(String[] args) throws IOException {
-        IHanoi hanoi = null;
-        boolean quit = false;
-        while (!quit) {
-            ItemsGameMenu itemGameMenu = getStartItemMenu();
-            switch (itemGameMenu) {
-                case LOADGAME:
-                    hanoi = createGameInstance(itemGameMenu);
-                    break;
-                case SAVEGAME:
-                    //TODO сохранять размеры поля
-                    if (hanoi != null) {
-                        hanoi.SaveGameToFile(Paths.get(Hanoi.PATH_FAILE_GAME));
-                    }
-                    break;
-                case QUITGAME:
-                    quit = true;
-                    break;
-                default:
-                    //TODO выход на середине игры
-                    hanoi = createGameInstance(itemGameMenu);
-                    hanoi.gamePlay();
-            }
-        }
-    }
 }
 
 enum ItemsGameMenu{
