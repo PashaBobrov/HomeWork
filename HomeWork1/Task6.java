@@ -12,7 +12,7 @@ import java.util.Arrays;
  * В задании нельзя использовать колекции, стрима.
  */
 public class Task6 {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         char[] arrNumbers;
         if (args.length > 0) {
             arrNumbers = args[0].toCharArray();
@@ -20,8 +20,8 @@ public class Task6 {
             return;
         }
         System.out.println(createPhoneNumber(arrNumbers));
-    }
-    public static String createPhoneNumber(char[] arrNumbers){
+    }*/
+    public String createPhoneNumber(char[] arrNumbers){
         String result;
         String[] arrNumbersString;
 

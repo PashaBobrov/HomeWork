@@ -1,20 +1,20 @@
 package HomeWork1;
 
+import HomeWork1.API.ICommunicationPrinter;
+
 import java.util.Objects;
 
-public class Task5_2 {
-    public static void main(String[] args) {
-        String name = "";
+public class Task5_2 implements ICommunicationPrinter {
 
-        if (args.length > 0) {
-            name = args[0];
-        }
+    @Override
+    public String welcom(String name) {
         if (Objects.equals(name,"Вася")) {
-            System.out.println("Привет\n" + "Я тебя так долго ждал");
-        }else if(Objects.equals(name,"Анастасия")) {
-            System.out.println("Я тебя так долго ждал");
+            return "Привет\n" + "Я тебя так долго ждал";
+        } else if (Objects.equals(name,"Анастасия")) {
+            return "Я тебя так долго ждал";
+
         } else {
-            System.out.println("Добрый день, а вы кто?");
+            return "Добрый день, а вы кто?";
         }
     }
 }

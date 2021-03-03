@@ -18,9 +18,10 @@ package HomeWork3.Calcs.Additional;
  * 	использований данного калькулятора. При вызове данного метода счётчик учёта не увеличивается.
  */
 
+import HomeWork3.Calcs.API.ICalculator;
 import HomeWork3.Calcs.Simple.*;
 
-public class CalculatorWithCounterAutoComposite {
+public class CalculatorWithCounterAutoComposite implements ICalculator {
     /* @calculator переменная для экземплара класса ' CalculatorWithMathExtends и
     родительского класса CalculatorWithOperator
      */

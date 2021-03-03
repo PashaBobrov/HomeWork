@@ -6,7 +6,7 @@ package HomeWork2.Loops;
  1.2.3 Пример: Ввели Привет, должно получиться в консоли: Введено не число
  */
 public class Task1_2 {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         if (isNumberArr(args[0])){
             char[] container = args[0].toCharArray();
             long result = Character.getNumericValue(container[0]);
@@ -17,7 +17,7 @@ public class Task1_2 {
             }
             System.out.println(" = " + result);
         }
-    }
+    } */
 
     public static boolean isNumberArr(String value){
         boolean result = false;

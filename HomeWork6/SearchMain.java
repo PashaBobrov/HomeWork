@@ -112,4 +112,5 @@ public class SearchMain {
         System.out.println("мир   " + searchEngineCaseNormalizer.search(text,"мир"));
 
     }
+    
 }

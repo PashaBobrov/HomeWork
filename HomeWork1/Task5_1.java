@@ -11,23 +11,21 @@ package HomeWork1;
 	ВНИМАНИЕ! В примерах if и else if для сравнения имён использовать код вида Objects.equals("Имя1", "Имя2").
 */
 
+import HomeWork1.API.ICommunicationPrinter;
+
 import java.util.Objects;
 
-public class Task5_1 {
-    public static void main(String[] args) {
-        String name = "";
+public class Task5_1 implements ICommunicationPrinter {
 
-        if (args.length > 0) {
-            name = args[0];
-        }
+    @Override
+    public String welcom(String name) {
         if (Objects.equals(name,"Вася")) {
-            System.out.println("Привет\n" + "Я тебя так долго ждал");
-            return;
+            return "Привет\n" + "Я тебя так долго ждал";
         }
         if (Objects.equals(name,"Анастасия")) {
-            System.out.println("Я тебя так долго ждал");
-            return;
+            return "Я тебя так долго ждал";
+
         }
-        System.out.println("Добрый день, а вы кто?");
+        return "Добрый день, а вы кто?";
     }
 }

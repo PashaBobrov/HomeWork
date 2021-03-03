@@ -8,7 +8,7 @@ package HomeWork2.Loops;
 import java.util.Scanner;
 
 public class Task1_3 {
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введите число:");
@@ -17,13 +17,16 @@ public class Task1_3 {
         int value2 = scanner.nextInt();
 
         System.out.print(value1 + " ^ " + value2);
+        System.out.println(" = " + pow(value1,value2));
+
+    }*/
+
+
+    static public double pow(double x, int dgr) {
         double result = 1; // Число в степени 0
-        for (int i = 1; i <= value2; i++) {
-            result *= value1;
+        for (int i = 1; i <= dgr; i++) {
+            result *= x;
         }
-        System.out.println(" = " + result);
-
-
+        return result;
     }
-
 }

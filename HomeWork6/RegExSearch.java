@@ -15,7 +15,6 @@ public class RegExSearch implements ISearchEngine{
 
         Pattern pattern = Pattern.compile("[^Р-пр-џЈИ]" + word + "[^Р-пр-џЈИ]",flags);
         Matcher matcher = pattern.matcher(text);
-
         int result = 0;
         while (matcher.find()) {
             result++;

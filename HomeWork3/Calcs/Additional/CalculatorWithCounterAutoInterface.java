@@ -16,7 +16,7 @@ import HomeWork3.Calcs.Simple.*;
  * 	использований данного калькулятора. При вызове данного метода счётчик учёта не увеличивается.
  */
 
-public class CalculatorWithCounterAutoInterface {
+public class CalculatorWithCounterAutoInterface implements ICalculator {
     private ICalculator calculator;
     private long countOperation;
 

@@ -19,7 +19,7 @@ import HomeWork3.Calcs.API.ICalculator;
  * 		10.5.2 Получить из памяти записанное значение. При получении записи из памяти память
  * 		стирается, при записи нового значения память перезаписывается.
  */
-public class CalculatorWithMemory {
+public class CalculatorWithMemory implements ICalculator {
     private double memoryCell;
     ICalculator calculator;
 

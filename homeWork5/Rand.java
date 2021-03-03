@@ -66,3 +66,4 @@ public class Rand implements IRandom {
         return rand.nextBoolean();
     }
 }
+

@@ -14,7 +14,7 @@ public class Task1_4 {
         long a = 1;
         long before_a = a;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите число множитель:");
+        System.out.println("Введите число множитель");
         int b = scanner.nextInt();
 
         do {

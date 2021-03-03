@@ -10,6 +10,7 @@ package HomeWork2.Loops;
 public class Task1_1 {
     static int maxValue;
 
+    /*
     public static void main(String[] args) {
         maxValue = Integer.parseInt(args[0]);
 
@@ -32,27 +33,16 @@ public class Task1_1 {
             }
             System.out.print(i);
         }
-        result = recursion(1);
+        result = recursion(5);
         System.out.println(" = " + result);
     }
-
-    public static long recursion1(int value, long result){
-        if(value == maxValue){
-            return result;
-        }else {
-            value++;
-            result *= value;
-            return recursion1(value, result);
-        }
-
-    }
+     */
 
     public static long recursion(int value){
-        if(value == maxValue){
+        if(value == 1){
             return value;
         }else {
-            value++;
-            return  (value - 1) * recursion(value);
+            return  value * recursion(value - 1);
         }
 
     }

@@ -10,13 +10,13 @@ package HomeWork1;
  */
 
 public class Task7 {
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         for (String arg: args){
             System.out.println(toBinaryString((byte) Integer.parseInt(arg)));
         }
 
-    }
-    public static String toBinaryString(byte number){
+    } */
+    public String toBinaryString(byte number){
         //String result = Long.toBinaryString(number); // Не интересно
         String result = "";
         int bit;

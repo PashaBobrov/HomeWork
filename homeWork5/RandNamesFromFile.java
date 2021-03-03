@@ -16,9 +16,14 @@ public class RandNamesFromFile extends RandStringNames implements IRandom {
      * @param path - путь к файлу
      */
     public RandNamesFromFile(Path path) throws IOException {
-        String content = new String(Files.readAllBytes(path));
-        content = content.replace(" ","");
-        storageNames = content.split(",");
+        try {
+            String content = new String(Files.readAllBytes(path));
+            content = content.replace(" ","");
+            storageNames = content.split(",");
+        } catch (IOException e) {
+            throw new IOException("Не удалось прочитать данные из файла",e);
+        }
+
     }
 
 }
